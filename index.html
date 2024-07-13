@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Restaurant</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+       <!-- Leaflet CSS -->
+       <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        
+        /* Custom styles */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+        }
+
+        .navbar {
+            background-color: #343a40 !important;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-link {
+            color: #fff !important;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #ffc107 !important;
+        }
+
+        section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            font-size: 36px;
+            margin-bottom: 30px;
+            color: #343a40;
+            text-transform: uppercase;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .lead {
+            font-size: 20px;
+            margin-bottom: 30px;
+            color: #6c757d;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #ffc107;
+            border-color: #ffc107;
+        }
+
+        .btn-primary:hover {
+            background-color: #ffca2c;
+            border-color: #ffca2c;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transform: translateY(-10px);
+        }
+
+        .card img {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #343a40;
+        }
+
+        .card-text {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #6c757d;
+        }
+
+        .add-to-cart {
+            background-color: #343a40;
+            border-color: #343a40;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+
+        .form-control {
+            border-radius: 10px;
+        }
+
+        .order-summary {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-summary h3 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #343a40;
+            text-transform: uppercase;
+        }
+
+        .order-summary ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .order-summary li {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #6c757d;
+        }
+
+        .order-summary .total-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #343a40;
+        }
+
+        .contact-info {
+            list-style: none;
+            padding: 0;
+        }
+
+        .contact-info li {
+            margin-bottom: 10px;
+            color: #343a40;
+        }
+
+        .social-media {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .social-media li {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .social-media li:last-child {
+            margin-right: 0;
+        }
+
+        .social-media li a {
+            color: #343a40;
+            text-decoration: none;
+            font-size: 20px;
+        }
+
+        .social-media li a:hover {
+            color: #ffc107;
+        }
+
+        footer {
+            background-color: #343a40;
+            color: #fff;
+            padding: 30px 0;
+        }
+
+        footer p {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 20px;
+            }
+
+            .lead {
+                font-size: 18px;
+            }
+
+            .section-title {
+                font-size: 30px;
+            }
+
+            .card img {
+                height: 150px;
+            }
+
+            .card-title {
+                font-size: 20px;
+            }
+
+            .card-text {
+                font-size: 14px;
+            }
+        }
+        .contact-info ul, .business-hours ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.contact-info ul li, .business-hours ul li {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.contact-info ul li i, .business-hours ul li i {
+    margin-right: 10px;
+}
+
+.business-hours p {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.social-media {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.social-media li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.social-media li a {
+    color: #333;
+    font-size: 20px;
+}
+
+.social-media li a:hover {
+    color: #007bff;
+}
+
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">Pizza Restaurant</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#menu">Menu</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contact Us</a>
+                </li>
+                <!-- Shopping Cart -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCart" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-shopping-cart"></i> Cart <span class="badge badge-pill badge-primary">0</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownCart">
+                        <div class="dropdown-header">Your Cart</div>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-item">Cart is empty</div>
+                        <!-- Cart items will be dynamically added here -->
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+    <!-- Landing Section -->
+    <section id="landing">
+        <div class="container text-center">
+            <h1 class="display-4">Welcome to Pizza Restaurant</h1>
+            <p class="lead">The best place to enjoy delicious pizzas!</p>
+            <img src="pizza-landing.jpg" class="img-fluid rounded-circle mb-4" alt="Pizza">
+            <p>Order online and get 10% off on your first order!</p>
+            <a href="#menu" class="btn btn-primary btn-lg">Order Now</a>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+<section id="menu">
+    <div class="container">
+        <h2 class="text-center mb-5 section-title">Our Menu</h2>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    <img src="pizza1.jpg" class="card-img-top" alt="Pizza 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Margherita Pizza</h5>
+                        <p class="card-text">Fresh tomatoes, mozzarella, parmesan, basil, olive oil.</p>
+                        <p class="card-text">Price: $10</p>
+                        <button class="btn btn-primary btn-block add-to-cart" data-name="Margherita Pizza"
+                            data-price="10"><i class="fas fa-cart-plus mr-2"></i>Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    <img src="pizza2.jpg" class="card-img-top" alt="Pizza 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Pepperoni Pizza</h5>
+                        <p class="card-text">Pepperoni, mozzarella, olive oil, tomato sauce.</p>
+                        <p class="card-text">Price: $12</p>
+                        <button class="btn btn-primary btn-block add-to-cart" data-name="Pepperoni Pizza"
+                            data-price="12"><i class="fas fa-cart-plus mr-2"></i>Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    <img src="pizza3.jpg" class="card-img-top" alt="Pizza 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Vegetarian Pizza</h5>
+                        <p class="card-text">Assorted vegetables, mozzarella, olive oil, tomato sauce.</p>
+                        <p class="card-text">Price: $11</p>
+                        <button class="btn btn-primary btn-block add-to-cart" data-name="Vegetarian Pizza"
+                            data-price="11"><i class="fas fa-cart-plus mr-2"></i>Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Additional Pizzas -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    <img src="pizza4.jpg" class="card-img-top" alt="Pizza 4">
+                    <div class="card-body">
+                        <h5 class="card-title">Four Cheese Pizza</h5>
+                        <p class="card-text">Mozzarella, cheddar, parmesan, gorgonzola.</p>
+                        <p class="card-text">Price: $13</p>
+                        <button class="btn btn-primary btn-block add-to-cart" data-name="Four Cheese Pizza"
+                            data-price="13"><i class="fas fa-cart-plus mr-2"></i>Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    <img src="pizza5.jpg" class="card-img-top" alt="Pizza 5">
+                    <div class="card-body">
+                        <h5 class="card-title">Hawaiian Pizza</h5>
+                        <p class="card-text">Ham, pineapple, mozzarella, olive oil, tomato sauce.</p>
+                        <p class="card-text">Price: $12</p>
+                        <button class="btn btn-primary btn-block add-to-cart" data-name="Hawaiian Pizza"
+                            data-price="12"><i class="fas fa-cart-plus mr-2"></i>Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    <img src="pizza6.jpg" class="card-img-top" alt="Pizza 6">
+                    <div class="card-body">
+                        <h5 class="card-title">BBQ Chicken Pizza</h5>
+                        <p class="card-text">Grilled chicken, red onion, BBQ sauce, mozzarella.</p>
+                        <p class="card-text">Price: $13</p>
+                        <button class="btn btn-primary btn-block add-to-cart" data-name="BBQ Chicken Pizza"
+                            data-price="13"><i class="fas fa-cart-plus mr-2"></i>Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    <img src="pizza7.jpg" class="card-img-top" alt="Pizza 7">
+                    <div class="card-body">
+                        <h5 class="card-title">Meat Lovers Pizza</h5>
+                        <p class="card-text">Pepperoni, sausage, bacon, ham, mozzarella, tomato sauce.</p>
+                        <p class="card-text">Price: $14</p>
+                        <button class="btn btn-primary btn-block add-to-cart" data-name="Meat Lovers Pizza"
+                            data-price="14"><i class="fas fa-cart-plus mr-2"></i>Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    <img src="pizza8.jpg" class="card-img-top" alt="Pizza 8">
+                    <div class="card-body">
+                        <h5 class="card-title">Supreme Pizza</h5>
+                        <p class="card-text">Pepperoni, sausage, bell peppers, onions, black olives, mushrooms,
+                            mozzarella.</p>
+                        <p class="card-text">Price: $14</p>
+                        <button class="btn btn-primary btn-block add-to-cart" data-name="Supreme Pizza"
+                            data-price="14"><i class="fas fa-cart-plus mr-2"></i>Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card">
+                    <img src="pizza9.jpg" class="card-img-top" alt="Pizza 9">
+                    <div class="card-body">
+                        <h5 class="card-title">Mediterranean Pizza</h5>
+                        <p class="card-text">Feta cheese, olives, sun-dried tomatoes, red onions, spinach,
+                            mozzarella.</p>
+                        <p class="card-text">Price: $13</p>
+                        <button class="btn btn-primary btn-block add-to-cart" data-name="Mediterranean Pizza"
+                            data-price="13"><i class="fas fa-cart-plus mr-2"></i>Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Nutritional Facts Section -->
+    <section id="nutritional-facts">
+        <div class="container">
+            <h2 class="text-center mb-5 section-title">Nutritional Facts</h2>
+            <div class="row">
+                <div class="col-lg-6">
+                    <h3>Margherita Pizza</h3>
+                    <p>Our Margherita Pizza is made with fresh ingredients and is a delicious option for any meal.</p>
+                    <p>Here are the nutritional facts per serving:</p>
+                    <ul>
+                        <li>Calories: 250</li>
+                        <li>Total Fat: 12g</li>
+                        <li>Cholesterol: 25mg</li>
+                        <li>Sodium: 480mg</li>
+                        <li>Total Carbohydrates: 28g</li>
+                        <li>Protein: 10g</li>
+                    </ul>
+                </div>
+                <div class="col-lg-6">
+                    <img src="pizza-nutrition.jpg" class="img-fluid" alt="Nutritional Facts">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Section -->
+    <section id="order">
+        <div class="container">
+            <h2 class="text-center mb-5 section-title">Order Takeout</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="mb-4">Your Order</h3>
+                    <div id="cart" class="order-summary">
+                        <ul id="cart-items">
+                        </ul>
+                        <p class="total-price">Total: $0</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h3 class="mb-4">Customer Information</h3>
+                    <form id="order-form">
+                        <div class="form-group">
+                            <input type="text" class="form-control mb-3" id="customer-name" placeholder="Your Name"
+                                required>
+                            <input type="email" class="form-control mb-3" id="customer-email"
+                                placeholder="Your Email" required>
+                            <textarea class="form-control mb-3" id="customer-address" rows="3"
+                                placeholder="Delivery Address" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Place Order</button>
+                    </form>
+                    <div id="order-status" class="mt-3" style="display: none;">
+                        <h4 class="mb-3">Order Confirmation</h4>
+                        <p>Thank you for your order, <span id="confirmation-name"></span>!</p>
+                        <p>Your order will be delivered to <span id="confirmation-address"></span>.</p>
+                        <p>Your estimated wait time is <span id="estimated-time"></span> minutes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <!-- Contact Section -->
+<section id="contact" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5 section-title">Contact Us</h2>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="contact-info">
+                    <h4>Contact Information</h4>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> Phone: 123-456-7890</li>
+                        <li><i class="fas fa-envelope"></i> Email: info@pizzarestaurant.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Address: 123 Pizza Street, Detroit, MI</li>
+                    </ul>
+                </div>
+                <div class="business-hours mt-4">
+                    <h4>Business Hours</h4>
+                    <ul>
+                        <li><span>Monday - Saturday:</span> 10am - 10pm</li>
+                        <li><span>Sunday:</span> Closed</li>
+                    </ul>
+                    <p id="status"></p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div id="map" style="height: 300px;"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p>&copy; 2024 Pizza Restaurant. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var cart = [];
+            var totalPrice = 0;
+
+            $(".add-to-cart").click(function () {
+                var name = $(this).data("name");
+                var price = parseFloat($(this).data("price"));
+                cart.push({
+                    name: name,
+                    price: price
+                });
+                totalPrice += price;
+                updateCart();
+            });
+
+            $(document).on("click", ".remove-item-btn", function () {
+                var index = $(this).data("index");
+                totalPrice -= cart[index].price;
+                cart.splice(index, 1);
+                updateCart();
+            });
+
+            function updateCart() {
+                $("#cart-items").empty();
+                cart.forEach(function (item, index) {
+                    $("#cart-items").append("<li class='list-group-item order-item'>" + item.name + " - $" + item.price.toFixed(2) +
+                        "<span class='remove-item-btn' data-index='" + index + "'>&times;</span></li>");
+                });
+                $(".total-price").text("Total: $" + totalPrice.toFixed(2));
+            }
+
+            $("#order-form").submit(function (event) {
+                event.preventDefault();
+                var name = $("#customer-name").val();
+                var email = $("#customer-email").val();
+                var address = $("#customer-address").val();
+
+                // Simulate payment processing
+                setTimeout(function () {
+                    var estimatedTime = Math.floor(Math.random() * 30) + 15; // Random number between 15 and 45
+                    $("#confirmation-name").text(name);
+                    $("#confirmation-address").text(address);
+                    $("#estimated-time").text(estimatedTime);
+                    $("#order-status").show();
+                }, 2000);
+            });
+        });
+    </script>
+    <!-- Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    // Initialize the map
+    var map = L.map('map').setView([42.3314, -83.0458], 12);
+
+    // Add the tile layer (OpenStreetMap)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Add a marker for the location of Detroit
+    L.marker([42.3314, -83.0458]).addTo(map)
+        .bindPopup('Detroit, MI')
+        .openPopup();
+</script>
+<script>
+    function checkOpenStatus() {
+        var now = new Date();
+        var day = now.getDay();
+        var hour = now.getHours();
+        var isOpen = (day >= 1 && day <= 6 && hour >= 10 && hour < 22);
+
+        var statusElement = document.getElementById('status');
+        if (isOpen) {
+            statusElement.textContent = "We're Open Now!";
+            statusElement.style.color = 'green';
+        } else {
+            statusElement.textContent = "Sorry, We're Closed Now.";
+            statusElement.style.color = 'red';
+        }
+    }
+
+    window.onload = function () {
+        checkOpenStatus();
+    };
+</script>
+<script>
+    $(document).ready(function () {
+        var cart = [];
+        var totalPrice = 0;
+
+        $(".add-to-cart").click(function () {
+            var name = $(this).data("name");
+            var price = parseFloat($(this).data("price"));
+            cart.push({
+                name: name,
+                price: price
+            });
+            totalPrice += price;
+            updateCart();
+        });
+
+        $(document).on("click", ".remove-item-btn", function () {
+            var index = $(this).data("index");
+            totalPrice -= cart[index].price;
+            cart.splice(index, 1);
+            updateCart();
+        });
+
+        function updateCart() {
+            $("#cart-items").empty();
+            cart.forEach(function (item, index) {
+                $("#cart-items").append("<div class='dropdown-item'>" + item.name + " - $" + item.price.toFixed(2) +
+                    "<span class='remove-item-btn' data-index='" + index + "'>&times;</span></div>");
+            });
+            $(".total-price").text("Total: $" + totalPrice.toFixed(2));
+            $(".badge").text(cart.length);
+        }
+
+        $("#order-form").submit(function (event) {
+            event.preventDefault();
+            var name = $("#customer-name").val();
+            var email = $("#customer-email").val();
+            var address = $("#customer-address").val();
+
+            // Simulate payment processing
+            setTimeout(function () {
+                var estimatedTime = Math.floor(Math.random() * 30) + 15; // Random number between 15 and 45
+                $("#confirmation-name").text(name);
+                $("#confirmation-address").text(address);
+                $("#estimated-time").text(estimatedTime);
+                $("#order-status").show();
+                cart = [];
+                totalPrice = 0;
+                updateCart();
+            }, 2000);
+        });
+    });
+</script>
+
+
+
+
+</body>
+
+</html>
